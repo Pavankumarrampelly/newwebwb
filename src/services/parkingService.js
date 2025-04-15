@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '/api/parking';
+const API_URL = 'http://localhost:8000/api/auth';
 
 // Get all parking slots
 const getAllParkingSlots = async () => {

@@ -143,6 +143,14 @@ const Navbar = () => {
             >
               <Car className="mx-auto h-5 w-5 mb-1" />
               Parking
+              <Car className="mx-auto h-5 w-5 mb-1" />
+            </Link>
+            <Link
+              to="/food"
+              className="flex-1 text-center px-2 py-1 rounded-md text-xs font-medium text-gray-700 hover:text-college-primary"
+            >
+              
+              Food
             </Link>
           </div>
         </div>
