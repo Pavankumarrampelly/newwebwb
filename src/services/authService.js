@@ -3,7 +3,7 @@ import axios from 'axios';
 // Use a relative URL for local development or server-side environment
 //const API_URL = "http://localhost:5000/api/auth";
 //const API_URL = process.env.REACT_APP_API_URL;
-const API_URL = "http://localhost:8000/api/auth";
+const API_URL = "http://localhost:5000/api/auth";
 
 // Set auth token for all requests
 const setAuthToken = (token) => {

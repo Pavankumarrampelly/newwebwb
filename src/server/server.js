@@ -30,12 +30,14 @@ const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/events');
 const parkingRoutes = require('./routes/parking');
 const foodRoutes = require('./routes/food');
+const hostRoutes = require('./routes/host');
 
 // Use Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/parking', parkingRoutes);
 app.use('/api/food', foodRoutes);
+app.use('/api/host', hostRoutes);
 
 
 // Serve static assets if in production
