@@ -1,9 +1,7 @@
 import React from "react";
 import { Toaster as Sonner } from "sonner";
 
-function Toaster({ ...props }) {
-  // We can't use the useTheme hook in a component that's not wrapped in the ThemeProvider
-  // So we default to "system" theme
+function SonnerToaster({ ...props }) {
   const theme = "system";
 
   return (
@@ -26,4 +24,4 @@ function Toaster({ ...props }) {
   );
 }
 
-export { Toaster };
+export { SonnerToaster };

@@ -1,6 +1,5 @@
-import React from "react";
-import { Toaster } from "./components/ui/Toaster";
-import { SonnerToaster } from "./components/ui/Sonner";
+import { Toaster as CustomToaster } from "./components/ui/Toaster";
+import { Toaster as SonnerToaster } from "./components/ui/Sonner";
 import { TooltipProvider } from "./components/ui/Tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -20,19 +19,19 @@ import MyTickets from "./pages/MyTickets";
 import Parking from "./pages/Parking";
 import Food from "./pages/Food";
 import NotFound from "./pages/NotFound";
-import EventDetails from "./pages/EventDetails";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
+      <CustomToaster />
       <SonnerToaster />
       <AuthProvider>
         <FoodCartProvider>
           <BrowserRouter>
             <Routes>
+              {/* Public Routes */}
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -46,7 +45,7 @@ const App = () => (
               <Route path="/parking" element={<ProtectedRoute><Parking /></ProtectedRoute>} />
               <Route path="/food" element={<ProtectedRoute><Food /></ProtectedRoute>} />
 
-              {/* Catch all route */}
+              {/* Catch-all Not Found Route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

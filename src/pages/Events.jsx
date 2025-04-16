@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/layout/Navbar';
+import { Link } from 'react-router-dom';
 import EventList from '../components/events/EventList';
 import EventsCalendar from '../components/calendar/EventsCalendar';
 import eventService from '../services/eventService';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/Tabs';
 import { useToast } from '../hooks/use-toast';
+import { Button } from '../components/ui/Button';
+import { Plus } from 'lucide-react';
+import { toast as sonnerToast } from "sonner";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -14,32 +18,37 @@ const Events = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
+        setLoading(true);
         const allEvents = await eventService.getAllEvents();
-        // Make sure we're always setting an array, even if the API returns something else
         setEvents(Array.isArray(allEvents) ? allEvents : []);
-        setLoading(false);
       } catch (error) {
         console.error('Failed to fetch events:', error);
-        toast({
-          title: 'Error',
-          description: 'Failed to load events. Please try again.',
-          variant: 'destructive'
+        sonnerToast.error('Failed to load events', {
+          description: 'Please try again or check your connection'
         });
-        // If there's an error, set events to an empty array
-        setEvents([]);
+      } finally {
         setLoading(false);
       }
     };
     
     fetchEvents();
-  }, [toast]);
+  }, []);
   
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Events</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">Events</h1>
+          
+          <Button asChild className="bg-college-primary hover:bg-college-primary/90">
+            <Link to="/create-event">
+              <Plus className="mr-2 h-4 w-4" />
+              Create Event
+            </Link>
+          </Button>
+        </div>
         
         <Tabs defaultValue="list" className="mb-6">
           <TabsList>

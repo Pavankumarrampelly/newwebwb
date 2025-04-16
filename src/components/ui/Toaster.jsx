@@ -1,6 +1,5 @@
 import React from "react";
-//import { useToast } from "@/hooks/use-toast";
-import { useToast } from '../../hooks/use-toast'; // ✅ relative path from ui -> hooks
+import { useToast } from "../../hooks/use-toast";
 
 import {
   Toast,

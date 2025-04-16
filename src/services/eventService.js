@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/auth';
+const API_URL = 'http://localhost:8000/api/events';
 
 // Get all events
 const getAllEvents = async () => {
@@ -9,7 +9,7 @@ const getAllEvents = async () => {
     return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error('Error fetching events:', error);
-    return []; // Return an empty array on error
+    throw error;
   }
 };
 
@@ -30,7 +30,7 @@ const getEventsByCategory = async (category) => {
     return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error('Error fetching events by category:', error);
-    return [];
+    throw error;
   }
 };
 
@@ -43,16 +43,24 @@ const getEventsByDate = async (date) => {
     return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error('Error fetching events by date:', error);
-    return [];
+    throw error;
   }
 };
 
 // Create new event
 const createEvent = async (eventData) => {
   try {
-    const response = await axios.post(API_URL, eventData);
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': token
+      }
+    };
+    const response = await axios.post(API_URL, eventData, config);
     return response.data;
   } catch (error) {
+    console.error('Error creating event:', error);
     throw error.response?.data || { msg: 'Error creating event' };
   }
 };
@@ -60,9 +68,16 @@ const createEvent = async (eventData) => {
 // Register for event
 const registerForEvent = async (eventId) => {
   try {
-    const response = await axios.post(`${API_URL}/${eventId}/register`);
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        'x-auth-token': token
+      }
+    };
+    const response = await axios.post(`${API_URL}/${eventId}/register`, {}, config);
     return response.data;
   } catch (error) {
+    console.error('Error registering for event:', error);
     throw error.response?.data || { msg: 'Error registering for event' };
   }
 };
@@ -70,9 +85,16 @@ const registerForEvent = async (eventId) => {
 // Cancel event registration
 const cancelEventRegistration = async (eventId) => {
   try {
-    const response = await axios.delete(`${API_URL}/${eventId}/register`);
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        'x-auth-token': token
+      }
+    };
+    const response = await axios.delete(`${API_URL}/${eventId}/register`, config);
     return response.data;
   } catch (error) {
+    console.error('Error cancelling registration:', error);
     throw error.response?.data || { msg: 'Error cancelling registration' };
   }
 };
@@ -80,22 +102,34 @@ const cancelEventRegistration = async (eventId) => {
 // Get user's registered events
 const getUserRegisteredEvents = async () => {
   try {
-    const response = await axios.get(`${API_URL}/user/registered`);
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        'x-auth-token': token
+      }
+    };
+    const response = await axios.get(`${API_URL}/user/registered`, config);
     return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error('Error fetching registered events:', error);
-    return [];
+    throw error;
   }
 };
 
 // Get user's hosted events
 const getUserHostedEvents = async () => {
   try {
-    const response = await axios.get(`${API_URL}/user/hosted`);
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        'x-auth-token': token
+      }
+    };
+    const response = await axios.get(`${API_URL}/user/hosted`, config);
     return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error('Error fetching hosted events:', error);
-    return [];
+    throw error;
   }
 };
 
